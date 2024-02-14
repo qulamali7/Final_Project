@@ -1,0 +1,31 @@
+#myPost{
+    padding: 80px 0px;
+    .my_post_container{
+        max-width: 1140px;
+        margin: auto;
+        .my_posts{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            .my_post{
+                width: 100%;
+                &_content{
+                    padding: 20px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    &_img{
+                        width: 300px;
+                    }
+                    .my_post_btn{
+                        display: flex;
+                        align-items: center;
+                        gap: 20px;
+                    }
+                }
+            }
+        }
+
+    }
+}

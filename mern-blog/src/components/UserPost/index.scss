@@ -1,0 +1,50 @@
+.user_post{
+    margin-top: 20px;
+    &_title{
+        h2{
+            text-transform: uppercase;
+            font-weight: 500;
+            letter-spacing: 3px;
+            text-align: center;
+            padding: 20px 0px 50px 0px;
+        }
+    }
+    form{
+        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+        padding: 50px ;
+        border-radius: 10px;
+        width: 500px;
+        .input_title{
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+            .line{
+                background-color: #fa5263c2;
+                height: 2px;
+                width: 20px;
+            }
+            label{
+
+            }
+        }
+        input{
+            width: 100%;
+            margin-bottom: 30px;
+            border: 1px solid #fa5263c2;
+            padding: 10px 20px;
+            border-radius: 30px;
+            &:focus{
+                outline: none;
+            }
+        }
+        
+        button{
+            background-color: #fa5263c2;
+            color: white;
+            padding: 8px 18px;
+            border-radius: 10px;
+            border: none;
+        }
+    }
+}
