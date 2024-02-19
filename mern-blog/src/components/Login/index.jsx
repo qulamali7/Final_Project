@@ -1,6 +1,10 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import "./index.scss";
+import { UserContext } from "../../context/UserContext";
+import { useNavigate } from "react-router-dom";
 function Login() {
+    const navigate = useNavigate()
+    const { addToken, decode, token } = useContext(UserContext);
     const [state, setState] = React.useState({
         email: "",
         password: ""
@@ -15,19 +19,24 @@ function Login() {
 
     const handleOnSubmit = evt => {
         evt.preventDefault();
+        fetch("http://localhost:3200/login", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                email: state.email,
+                password: state.password,
+            }),
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                addToken(data);
+                console.log(data);
+            })
+        token?.error ? navigate("") : navigate("/")
 
-        const { email, password } = state;
-        alert(`You are login with email: ${email} and password: ${password}`);
-
-        for (const key in state) {
-            setState({
-                ...state,
-                [key]: ""
-            });
-        }
     };
-    
-
     return (
         <div className="form-container sign-in-container">
             <form onSubmit={handleOnSubmit}>
@@ -46,6 +55,7 @@ function Login() {
                     value={state.password}
                     onChange={handleChange}
                 />
+                {token?.error ? <p>{token.error}</p> : null}
                 <button>Sign In</button>
             </form>
         </div>

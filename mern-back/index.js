@@ -11,7 +11,7 @@ const app = express()
 app.use(cors())
 app.use(express.json())
 
-app.use("/assets", express.static('./public/imgs'))
+app.use("/assets", express.static('./public/image'))
 app.use("/users", userRouter)
 app.use("/posts", postRouter)
 app.use("/", authRoute)

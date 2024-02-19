@@ -22,12 +22,11 @@ const PostsCards = () => {
                 {posts && posts.map((x) => (
                     <Link to={"/detail/" + x._id}>
                         <div className='posts_card'>
-                            <div className='card_wrapper'>
-                                <div className='card_text'>
-                                    <span>{x.category.name}</span>
-                                    <h2>{x.title}</h2>
-                                    <p>See More</p>
-                                </div>
+                            <img src={x.image} alt="" />
+                            <div className='card_text'>
+                                <span>{x.category.name}</span>
+                                <h2>{x.title}</h2>
+                                <p>See More</p>
                             </div>
                         </div>
                     </Link>

@@ -2,24 +2,7 @@ import { UsersModel } from "../Model/UserModel.js";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 
-// export const handleLoginController = async (req, res) => {
-//     try {
-//         const { username, password } = req.body
-//         const user = await UsersModel.findOne({ username })
-//         if (!user) {
-//             res.send("User Not Found!")
-//             return
-//         }
-//         if (user.password !== password) {
-//             res.send("Password not valid")
-//             return
-//         }
-//         var token = jwt.sign({ username, role: user.role }, process.env.JWT_KEY, { expiresIn: '1h' });
-//         res.send(token)
-//     } catch (error) {
-//         res.send(error.message)
-//     }
-// }
+
 export const loginUser = async (req, res, next) => {
     try {
         const { email, password } = req.body
@@ -35,11 +18,9 @@ export const loginUser = async (req, res, next) => {
         if (!checkPassword) {
             return res.status(401).send({ error: "Invalid credentials" })
         }
-
-        const { _id: id, name } = user
-        console.log(id);
-        const token = jwt.sign({ id, name }, process.env.JWT)
-        res.status(200).json({ token, id, name })
+        const { _id: id, name, role } = user
+        const token = jwt.sign({ role: user.role, email: user.newEmail, _id: user._id }, process.env.JWT_KEY)
+        res.status(200).json({ token, id, name, role });
     } catch (error) {
         return res.status(500).json({ error: "User login failed" })
     }
@@ -74,14 +55,3 @@ export const registerUser = async (req, res, next) => {
     }
 }
 
-// export const handleRegisterController = async (req, res) => {
-//     try {
-//         const { username, password, role } = req.body;
-//         const newUser = new UsersModel({ username, password, role })
-//         var token = jwt.sign({ username: newUser.username, role: newUser.role }, process.env.JWT_KEY, { expiresIn: '1h' });
-//         await newUser.save()
-//         res.send(token)
-//     } catch (error) {
-//         res.send(error.message)
-//     }
-// }

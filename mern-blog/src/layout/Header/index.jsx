@@ -1,7 +1,9 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useContext, useEffect, useRef } from 'react'
 import "./index.scss";
 import { Link, NavLink } from 'react-router-dom';
+import { UserContext } from '../../context/UserContext';
 const Header = () => {
+    const { decode } = useContext(UserContext);
     const headerRef = useRef(null)
     const stickyHeader = () => {
         window.addEventListener('scroll', () => {
@@ -32,6 +34,10 @@ const Header = () => {
                                     <div className='line'></div>
                                 </li>
                                 <li>
+                                    <NavLink className="montserrat" to={"/blogs"}>Blog</NavLink>
+                                    <div className='line'></div>
+                                </li>
+                                <li>
                                     <NavLink className="montserrat" to={"/"}>About</NavLink>
                                     <div className='line'></div>
                                 </li>
@@ -39,10 +45,10 @@ const Header = () => {
                                     <NavLink className="montserrat" to={"/login"}>Login</NavLink>
                                     <div className='line'></div>
                                 </li>
-                                <li>
+                                {console.log(decode)}
+                                {decode ? <li>
                                     <NavLink className="montserrat" to={"/userProfile"}><i className="fa-regular fa-user"></i></NavLink>
-                                </li>
-                                
+                                </li> : null}
                             </ul>
                         </nav>
                         <button className='nav_menu'>

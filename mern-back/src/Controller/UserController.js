@@ -1,5 +1,6 @@
 import { UsersModel } from "../Model/UserModel.js";
-
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
 export const getAllUsers = async (req, res) => {
     try {
         const users = await UsersModel.find({});
@@ -22,7 +23,9 @@ export const getUser = async (req, res) => {
 export const createUser = async (req, res) => {
     try {
         const { name, email, password, role } = req.body
-        const newUser = new UsersModel({ name, email, password, role })
+        const salt = await bcrypt.genSalt(10)
+        const hash = await bcrypt.hash(password, salt)
+        const newUser = new UsersModel({ name, email, password: hash, role })
         await newUser.save()
         res.status(200).json('Got a POST request!')
     } catch (error) {
@@ -34,8 +37,11 @@ export const updateUsers = async (req, res) => {
     try {
         const { id } = req.params
         const { name, email, password, role } = req.body
-        const user = await UsersModel.findByIdAndUpdate(id, { name, email, password, role });
-        res.send("Got a PUT request");
+        const salt = await bcrypt.genSalt(10)
+        const hash = await bcrypt.hash(password, salt)
+        const user = await UsersModel.findByIdAndUpdate(id, { name, email, password: hash, role });
+        const token = jwt.sign({ role: user.role, email: user.newEmail, _id: user._id }, process.env.JWT_KEY)
+        res.status(200).json({ token, id, name })
     } catch (error) {
         return res.status(401).send({ error: error.message });
     }

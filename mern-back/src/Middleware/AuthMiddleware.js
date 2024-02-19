@@ -15,7 +15,7 @@ export const verify = function (roles) {
       // if (!roles.includes(decoded.role)) {
       //   res.status(403).send("You don't have access")
       // }
-      next()
+      // next()
     } catch (error) {
       res.send(error.message)
     }

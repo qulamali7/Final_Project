@@ -1,33 +1,47 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import "./index.scss";
+import { useNavigate } from "react-router-dom";
+import { UserContext } from "../../context/UserContext";
 function Register() {
+    const {token} = useContext(UserContext)
+    const [error, setError] = useState("")
+    const navigate = useNavigate()
     const [state, setState] = React.useState({
         name: "",
         email: "",
-        password: ""
+        password: "",
+        password2: ""
     });
     const handleChange = evt => {
         const value = evt.target.value;
-        setState({
-            ...state,
-            [evt.target.name]: value
-        });
+        setState({ ...state, [evt.target.name]: value });
     };
 
-    const handleOnSubmit = evt => {
-        evt.preventDefault();
-
-        const { name, email, password } = state;
-        alert(
-            `You are sign up with name: ${name} email: ${email} and password: ${password}`
-        );
-
-        for (const key in state) {
-            setState({
-                ...state,
-                [key]: ""
-            });
+    const handleOnSubmit = async evt => {
+        // evt.preventDefault();
+        // alert(
+        //     `You are sign up with name: ${name} email: ${email} and password: ${password}`
+        // );
+        // setError(" ")
+        try {
+            await fetch("http://localhost:3200/register", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    name: state.name,
+                    email: state.email,
+                    password: state.password,
+                    password2: state.password2 
+                }),
+            })
+        } catch (error) {
+            setError(error)
         }
+        // for (const key in state) {
+        //     setState({...state,[key]: ""});
+        // }
     };
 
     return (
@@ -55,6 +69,14 @@ function Register() {
                     onChange={handleChange}
                     placeholder="Password"
                 />
+                <input
+                    type="password"
+                    name="password2"
+                    value={state.password2}
+                    onChange={handleChange}
+                    placeholder="Confirm Password"
+                />
+                {token?.error ? <p>{token.error}</p> : null}
                 <button>Sign Up</button>
             </form>
         </div>

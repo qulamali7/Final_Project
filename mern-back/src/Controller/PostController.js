@@ -21,10 +21,10 @@ export const getPost = async (req, res) => {
 
 export const createPost = async (req, res) => {
     try {
-        const { image, title, description, category, author } = req.body;
-        const newPost = new PostModel({ image, title, description, category, author })
+        const { title, description, category, author } = req.body;
+        const newPost = new PostModel({ image: "http://localhost:3200/assets/" + req.upload, title, description, category, author })
         await newPost.save()
-        res.send('Got a POST request')
+        res.send(req.file)
     } catch (error) {
         return res.status(401).send({ error: error.message });
     }

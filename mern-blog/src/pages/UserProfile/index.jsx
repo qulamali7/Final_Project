@@ -1,9 +1,12 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import "./index.scss";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import UserPost from '../../components/UserPost';
 import EditProfile from '../../components/EditProfile';
+import { UserContext } from '../../context/UserContext';
 const UserProfile = () => {
+  const navigate = useNavigate()
+  const { token, decode, addToken, setToken, setDecode } = useContext(UserContext)
   const [tab, setTab] = useState("post")
   const [profileImg, setProfileImg] = useState("")
   const [name, setName] = useState("")
@@ -11,6 +14,11 @@ const UserProfile = () => {
   const [currentPassword, setCurrentPassword] = useState("")
   const [newPassword, setNewPassword] = useState("")
   const [confirmPassword, setConfirmPassword] = useState("")
+  function logOut() {
+    setToken(null);
+    setDecode(null);
+    navigate("/")
+  }
   return (
     <>
       <section id='profile'>
@@ -39,8 +47,11 @@ const UserProfile = () => {
             </form>
           </div>
         </div> */}
+        {console.log(token)}
+        {console.log(decode)}
         <div className='hero '>
-          <h1 className='libre-bold'>Iana</h1>
+          <h1 className='libre-bold'>{decode?.name}</h1>
+          <p onClick={logOut}>log out</p>
         </div>
         <div className='profile_container'>
           <div className='profile_title'>
