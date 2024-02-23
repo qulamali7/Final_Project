@@ -4,6 +4,7 @@ import { Link, NavLink } from 'react-router-dom';
 import { SerachContext } from '../../context/SearchContext';
 import AOS from "aos";
 import "aos/dist/aos.css";
+import { Helmet } from 'react-helmet-async';
 const Blog = () => {
   useEffect(() => {
     AOS.init({ duration: 2500 });
@@ -41,6 +42,10 @@ const Blog = () => {
 
   return (
     <>
+    <Helmet>
+        <title>Blogs</title>
+        <link rel="canonical" href="https://www.tacobell.com/" />
+      </Helmet>
       <section id='blog'>
         <div className='blog_hero'>
           <h1 className='montserrat' data-aos="fade-up">Blog</h1>

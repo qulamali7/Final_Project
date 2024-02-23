@@ -16,6 +16,7 @@ import './index.scss'
 // import LoginRegister from './pages/LoginRegister/index.jsx'
 // import Blog from './pages/Blog/index.jsx'
 import MainProvider from './context/MainContext.jsx'
+import { HelmetProvider } from 'react-helmet-async'
 // const router = createBrowserRouter([
 //   {
 //     path: "/",
@@ -38,8 +39,10 @@ import MainProvider from './context/MainContext.jsx'
 // ])
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <MainProvider>
-      <App />
-    </MainProvider>
+    <HelmetProvider>
+      <MainProvider>
+        <App />
+      </MainProvider>
+    </HelmetProvider>
   </React.StrictMode>,
 )

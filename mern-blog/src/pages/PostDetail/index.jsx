@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import "./index.scss";
 import { useParams } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 const PostDetail = () => {
     const [detail, setDetail] = useState([])
     const { id } = useParams()
@@ -18,6 +19,10 @@ const PostDetail = () => {
     }, [])
     return (
         <>
+        <Helmet>
+        <title>Blog Detail</title>
+        <link rel="canonical" href="https://www.tacobell.com/" />
+      </Helmet>
             <section id='post_detail'>
                 <div className='hero_detail'>
                     <img src={detail.image} alt="" />
