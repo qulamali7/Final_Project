@@ -1,36 +1,24 @@
-import React, { createContext, useContext } from "react";
+import Cookies from "js-cookie";
 import { jwtDecode } from "jwt-decode";
+import React, { createContext, useEffect, useState } from "react";
 import useLocalStorage from "../hook/useLocalStorage";
-import { useNavigate } from "react-router-dom";
-
 export const UserContext = createContext();
 
 function UserProvider({ children }) {
-    const [token, setToken] = useLocalStorage(null);
-    const [decode, setDecode] = useLocalStorage(null);
-
-    function addToken(token) {
-        setToken(token);
-        console.log(token);
-        const tokenDecoded = jwtDecode(token);
-        console.log(tokenDecoded);
-        setDecode(tokenDecoded);
+    const [token, setToken] = useState(Cookies.get("token") ? Cookies.get("token") : null);
+    const [decode, setDecode] = useState(token ? jwtDecode(token) : null);
+    function addToken(value) {
+        setToken(value);
+        console.log(value);
+        const decoded = jwtDecode(value)
+        setDecode(decoded)
+        Cookies.set("token", value, { expires: 7, secure: true });
     }
-
-    function logOut() {
-        setToken(null);
-        setDecode(null);
-    }
-
-    const data = {
-        token,
-        decode,
-        addToken,
-        logOut,
-        setToken,
-        setDecode
-    };
-    return <UserContext.Provider value={data}>{children}</UserContext.Provider>;
+    return (
+        <UserContext.Provider value={{ setDecode, setToken, token, addToken, decode }}>
+            {children}
+        </UserContext.Provider>
+    );
 }
 
 export default UserProvider;

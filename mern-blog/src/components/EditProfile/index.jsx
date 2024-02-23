@@ -2,9 +2,10 @@ import React, { useContext, useEffect, useState } from 'react'
 import "./index.scss";
 import { UserContext } from '../../context/UserContext';
 import { useNavigate } from 'react-router-dom';
+import Cookies from 'js-cookie';
 const EditProfile = () => {
   const navigate = useNavigate()
-  const { token, setDecode, setToken,addToken } = useContext(UserContext)
+  const { token, decode, setDecode, setToken, addToken } = useContext(UserContext)
   const [state, setState] = React.useState({
     name: "",
     email: "",
@@ -16,26 +17,37 @@ const EditProfile = () => {
   };
   const handleOnSubmit = evt => {
     evt.preventDefault();
-    fetch("http://localhost:3200/users/" + token.id, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        name: state.name,
-        email: state.email,
-        password: state.password,
+    try {
+      fetch(`http://localhost:3200/users/editProfile/${decode._id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: state.name,
+          email: state.email,
+          password: state.password,
+        }),
       })
-    })
-    .then((res) => res.json())
-    .then((data) => {
-      addToken(data);
-      console.log(data);
-    });
-  };
+        .then((res) => res.json())
+        .then(() => {
+          setToken(null);
+          setDecode(null);
+          Cookies.remove("token");
+          navigate("/")
+
+        }) 
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
+
   return (
     <>
       <div className='edit_profile'>
+        <div className='edit_profile_title'>
+          <h2 className='montserrat'>Edit Profile</h2>
+        </div>
         <form action="" onSubmit={handleOnSubmit}>
           <div className='input_title'>
             <div className='line'></div>

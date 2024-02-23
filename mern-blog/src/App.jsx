@@ -10,6 +10,9 @@ import ErrorPage from './pages/Error'
 import AdminPanel from './pages/AdminPanel'
 import PrivateRoute from './routes/PrivateRoute'
 import AddAdmin from './pages/AddAdmin'
+import UpdateCategory from './pages/UpdateCategory'
+import UpdatePosts from './pages/UpdatePosts'
+import UpdateUser from './pages/UpdateUser'
 
 function App() {
   return (
@@ -22,13 +25,15 @@ function App() {
             <Route path='/userProfile' element={<UserProfile />} />
             <Route path='/detail/:id' element={<PostDetail />} />
             <Route path='/login' element={<LoginRegister />} />
-            <Route path='*' element={<ErrorPage />} />
           </Route>
-          <Route path='/addAdmin' element={<AddAdmin />} />
-          <Route path='/adminPanel' element={<AdminPanel />} />
-          {/* <Route element={<PrivateRoute roles={["admin"]} />}>
+          <Route path='*' element={<ErrorPage />} />
+          <Route element={<PrivateRoute roles={["admin"]} />}>
             <Route path="/adminPanel" element={<AdminPanel />} />
-          </Route> */}
+            <Route path="/addAdmin" element={<AddAdmin />} />
+            <Route path="/updateCategory/:id" element={<UpdateCategory />} />
+            <Route path="/updatePosts/:id" element={<UpdatePosts />} />
+            <Route path="/updateUser/:id" element={<UpdateUser />} />
+          </Route>
         </Routes>
       </BrowserRouter>
     </>

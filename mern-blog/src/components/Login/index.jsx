@@ -1,10 +1,11 @@
 import React, { useContext, useState } from "react";
 import "./index.scss";
 import { UserContext } from "../../context/UserContext";
-import { useNavigate } from "react-router-dom";
+import { useAsyncError, useNavigate } from "react-router-dom";
 function Login() {
     const navigate = useNavigate()
     const { addToken, decode, token } = useContext(UserContext);
+    const [error, setError] = useState("")
     const [state, setState] = React.useState({
         email: "",
         password: ""
@@ -12,14 +13,12 @@ function Login() {
     const handleChange = evt => {
         const value = evt.target.value;
         setState({
-            ...state,
-            [evt.target.name]: value
+            ...state, [evt.target.name]: value
         });
     };
-
-    const handleOnSubmit = evt => {
+    const handleOnSubmit = async evt => {
         evt.preventDefault();
-        fetch("http://localhost:3200/login", {
+        await fetch("http://localhost:3200/login", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -34,8 +33,7 @@ function Login() {
                 addToken(data);
                 console.log(data);
             })
-        token?.error ? navigate("") : navigate("/")
-
+        token ? navigate("") : navigate("/")
     };
     return (
         <div className="form-container sign-in-container">
@@ -55,7 +53,7 @@ function Login() {
                     value={state.password}
                     onChange={handleChange}
                 />
-                {token?.error ? <p>{token.error}</p> : null}
+                {token?.error ? <p>{error}</p> : null}
                 <button>Sign In</button>
             </form>
         </div>

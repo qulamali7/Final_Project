@@ -2,64 +2,9 @@
     display: flex;
     align-items: center;
     flex-wrap: wrap;
-    gap: 20px;
+    gap: 50px;
     justify-content: space-evenly;
-    // .posts_card{
-    //     width: 32%;
-    //     background-color: #f5f5f5;
-    //     border-radius: 10px;
-    //     box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
-    //     overflow: hidden;
-    //     &:hover .card_img img {
-    //          transform: scale(1.2);
-    //          overflow: hidden;
-    //     }
-    //     .card_img{
-    //         padding: 10px;
-    //         border-radius: 10px;
-    //         overflow: hidden;
-    //         img{
-    //             border-radius: 10px;
-    //             transition: 0.5s all ease;
-    //         }
-    //     }
-    //     .card_content{
-    //         padding: 10px;
-
-    //         .card_author{
-    //             margin-top: 20px;
-    //             display: flex;
-    //             align-items: center;
-    //             justify-content: space-between;
-    //             .author_content{
-    //                 display: flex;
-    //                 align-items: center;
-    //                 gap: 20px;
-    //                 img{
-    //                     width: 50px;
-    //                     height: 50px;
-    //                     border-radius: 50%;
-    //                     object-fit: cover;
-    //                 }
-    //             }
-    //             button{
-    //                 padding: 6px 12px;
-    //                 margin-right: 10px;
-    //                 border: none;
-    //                 background-color: gray;
-    //                 color: white;
-    //                 border-radius: 10px;
-    //             }
-
-    //         }
-    //     }
-    // }
-    
     .posts_card {
-        // background-image: url("https://demos.pixelgrade.com/pile/wp-content/uploads/sites/6/2014/09/ionabrown_6.jpg");
-        // background-repeat: no-repeat;
-        // background-size: contain;
-        // background-attachment: fixed;
         width: 300px;
         height: 500px;
         position: relative;
@@ -103,3 +48,23 @@
         }
     }
 }
+
+@media (max-width: 575.98px) { 
+    
+ }
+
+@media (min-width: 576px) and (max-width: 767.98px) { 
+    
+ }
+
+@media (min-width: 768px) and (max-width: 991.98px) { 
+    
+ }
+
+@media (min-width: 992px) and (max-width: 1199.98px) { 
+    
+ }
+
+@media (min-width: 1200px) { 
+    
+ }

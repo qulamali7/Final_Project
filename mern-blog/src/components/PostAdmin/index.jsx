@@ -39,10 +39,10 @@ const PostAdmin = () => {
                         <td>{x._id}</td>
                         <td className='table-img'><img src={x.image} alt="" /></td>
                         <td>{x.title}</td>
-                        <td>{x.description}</td>
+                        <td dangerouslySetInnerHTML={{__html:x.description.slice(0,50)}}></td>
                         <td>{x.author?.name}</td>
                         <td>{x.category?.name}</td>
-                        <td><Link to={"/update/" + x._id}><button>UPDATE</button></Link></td>
+                        <td><Link to={"/updatePosts/" + x._id}><button>UPDATE</button></Link></td>
                         <td><button className="btn" onClick={() => { DeleteFetch(x._id) }}>DELETE</button></td>
                     </tr>
                 ))}

@@ -4,13 +4,16 @@ import { Link, useNavigate } from 'react-router-dom';
 import AddUserAdmin from '../../components/AddUserAdmin';
 import AddPostAdmin from '../../components/AddPostAdmin';
 import { UserContext } from '../../context/UserContext';
+import AddCategoryAdmin from '../../components/AddCategoryAdmin';
+import Cookies from 'js-cookie';
 const AddAdmin = () => {
     const navigate = useNavigate()
     const { setToken, setDecode } = useContext(UserContext)
     const [tab, setTab] = useState("user")
     function logOut() {
         setToken(null);
-        setDecode(null);
+        setDecode(null)
+        Cookies.remove("token");
         navigate("/")
     }
     return (
@@ -25,6 +28,7 @@ const AddAdmin = () => {
                         <div className='add_tab'>
                             <button onClick={() => setTab("user")} className={`${tab === 'user' && "active_btn"} btn`}>User</button>
                             <button onClick={() => setTab("post")} className={`${tab === 'post' && "active_btn"} btn`}>Post</button>
+                            <button onClick={() => setTab("category")} className={`${tab === 'category' && "active_btn"} btn`}>Category</button>
                         </div>
                         <div className='add_content'>
                             {
@@ -32,6 +36,9 @@ const AddAdmin = () => {
                             }
                             {
                                 tab === 'post' && <AddPostAdmin />
+                            }
+                            {
+                                tab === 'category' && <AddCategoryAdmin />
                             }
                         </div>
                     </div>

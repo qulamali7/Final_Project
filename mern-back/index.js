@@ -7,6 +7,7 @@ import { authRoute } from './src/Routes/AuthRoutes.js';
 import { postRouter } from './src/Routes/PostRoutes.js';
 import { PostModel } from './src/Model/PostModel.js';
 import { UsersModel } from './src/Model/UserModel.js';
+import { categoryRouter } from './src/Routes/CategoryRoutes.js';
 const app = express()
 app.use(cors())
 app.use(express.json())
@@ -14,34 +15,9 @@ app.use(express.json())
 app.use("/assets", express.static('./public/image'))
 app.use("/users", userRouter)
 app.use("/posts", postRouter)
+app.use("/category", categoryRouter)
 app.use("/", authRoute)
 
-
-const categorySchema = new Schema({
-    name: String,
-});
-export const CategoryModel = mongoose.model("categories", categorySchema);
-
-
-app.get('/category', async (req, res) => {
-    try {
-        const category = await CategoryModel.find({});
-        res.json(category);
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
-})
-
-app.post('/category', async (req, res) => {
-    try {
-        const { name } = req.body;
-        const newCategory = new CategoryModel({ name });
-        await newCategory.save();
-        res.json(newCategory);
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
-})
 
 app.get('/postBycategory/:id', async (req, res) => {
     try {
@@ -72,9 +48,10 @@ app.get('/postByauthor/:id', async (req, res) => {
     }
 })
 
-app.get('/postWithauthorAndcategory', async (req, res) => {
+app.delete('/postByauthor/:id', async (req, res) => {
     try {
-        const posts = await PostModel.find().populate("author").populate("category")
+        const { id } = req.params;
+        const posts = await PostModel.findByIdAndDelete({ _id: id });
         res.json(posts);
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -83,7 +60,26 @@ app.get('/postWithauthorAndcategory', async (req, res) => {
 
 app.get('/postWithauthorAndcategory/:id', async (req, res) => {
     try {
-        const {id}=req.params
+        const { id } = req.params;
+        const posts = await PostModel.find({ author: id }).populate("author").populate("category")
+        res.json(posts);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+})
+
+app.get('/postWithauthorAndcategory', async (req, res) => {
+    try {
+        const posts = await PostModel.find().populate("author").populate("category")
+        res.json(posts);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+})
+//get id by post(detail page)
+app.get('/postdetailauthorAndcategory/:id', async (req, res) => {
+    try {
+        const { id } = req.params
         const posts = await PostModel.findById(id).populate("author").populate("category")
         res.json(posts);
     } catch (error) {

@@ -3,8 +3,9 @@ import "./index.scss";
 import ReactQuill from "react-quill";
 import 'react-quill/dist/quill.snow.css'
 import { UserContext } from '../../context/UserContext';
+import { useEffect } from 'react';
 const UserPost = () => {
-  const { decode } = useContext(UserContext)
+  const { token, decode } = useContext(UserContext)
   const modules = {
     toolbar: [
       [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
@@ -25,20 +26,34 @@ const UserPost = () => {
   const [category, setCategory] = useState('')
   const [description, setDescription] = useState('')
   const [image, setImage] = useState('')
-  function handleSubmit(e) {
-    e.preventDefault()
+  async function handleSubmit() {
+    // e.preventDefault()
     const formData = new FormData()
     formData.append("title", title)
     formData.append("category", category)
     formData.append("description", description)
     formData.append("image", image)
-    formData.append("author", decode.id)
-    fetch("http://localhost:3200/posts", {
+    formData.append("author", decode._id)
+    await fetch("http://localhost:3200/posts", {
       method: "POST",
-      body: formData
+      body: formData,
     })
-      .then(console.log("gonderildi"))
   }
+  const [categories, setCategories] = useState([])
+  async function getFetch() {
+    try {
+      await fetch("http://localhost:3200/category")
+        .then(res => res.json())
+        .then(data => setCategories(data))
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
+  useEffect(() => {
+    getFetch()
+  }, [])
+
+
   return (
     <>
       <div className='user_post'>
@@ -50,23 +65,27 @@ const UserPost = () => {
             <div className='line'></div>
             <label htmlFor="text">Title</label>
           </div>
-          <input type="text" id='text' name='text'  onChange={e => setTitle(e.target.value)} />
+          <input type="text" id='text' name='text' onChange={e => setTitle(e.target.value)} />
           <div className='input_title'>
             <div className='line'></div>
-            <label htmlFor="text">Category</label>
+            <label htmlFor="category">Category</label>
           </div>
-          <input type="text" id='text' name='text' onChange={e => setCategory(e.target.value)} />
+          <select  onChange={e => setCategory(e.target.value)}>
+            {categories && categories.map((x) => (
+              <option key={x._id} value={x._id} >{x.name}</option>
+            ))}
+          </select>
           <div className='input_title'>
             <div className='line'></div>
-            <label htmlFor="text">Description</label>
+            <label htmlFor="description">Description</label>
           </div>
-          <ReactQuill modules={modules} formats={formats}  onChange={e => setDescription(e.target.value)} />
+          <ReactQuill id='description' className='input_desc' modules={modules} formats={formats} onChange={setDescription} />
           <div className='input_title'>
             <div className='line'></div>
-            <label htmlFor="text">Photo</label>
+            <label htmlFor="photo" className='file_btn'>Upload Photo</label>
           </div>
-          <input type="file"   onChange={e => setImage(e.target.files[0])} />
-          <button>Edit</button>
+          <input type="file" id='photo' className='file_input' onChange={e => setImage(e.target.files[0])} />
+          <button className='submit_btn'>Create</button>
         </form>
       </div>
     </>

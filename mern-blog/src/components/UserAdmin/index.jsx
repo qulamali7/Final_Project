@@ -28,6 +28,7 @@ const UserAdmin = () => {
                     <th>Id</th>
                     <th>Name</th>
                     <th>Email</th>
+                    <th>Role</th>
                     <th>Update</th>
                     <th>Delete</th>
                 </tr>
@@ -36,7 +37,8 @@ const UserAdmin = () => {
                         <td>{x._id}</td>
                         <td>{x.name}</td>
                         <td>{x.email}</td>
-                        <td><Link to={"/update/" + x._id}><button>UPDATE</button></Link></td>
+                        <td>{x.role}</td>
+                        <td><Link to={"/updateUser/" + x._id}><button>UPDATE</button></Link></td>
                         <td><button className="btn" onClick={() => { DeleteFetch(x._id) }}>DELETE</button></td>
                     </tr>
                 ))}

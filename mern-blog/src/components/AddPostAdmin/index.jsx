@@ -1,8 +1,12 @@
-import React, { useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import ReactQuill from "react-quill";
 import 'react-quill/dist/quill.snow.css'
 import "./index.scss";
+import { useNavigate } from 'react-router-dom';
+import { UserContext } from '../../context/UserContext';
 const AddPostAdmin = () => {
+    const { token } = useContext(UserContext)
+    const navigate = useNavigate()
     const modules = {
         toolbar: [
             [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
@@ -34,10 +38,27 @@ const AddPostAdmin = () => {
         formData.append("author", author)
         fetch("http://localhost:3200/posts", {
             method: "POST",
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
             body: formData
         })
-            .then(console.log("gonderildi"))
+            .then(() => navigate("/adminPanel"))
     }
+    const [categories, setCategories] = useState([])
+    async function getFetch() {
+        try {
+            await fetch("http://localhost:3200/category")
+                .then(res => res.json())
+                .then(data => setCategories(data))
+        } catch (error) {
+            console.log(error.message);
+        }
+    }
+    useEffect(() => {
+        getFetch()
+    }, [])
+
     return (
         <>
             <div className='add_tab_page '>
@@ -52,23 +73,27 @@ const AddPostAdmin = () => {
                         <div className='line'></div>
                         <label htmlFor="text">Category</label>
                     </div>
-                    <input type="text" id='text' name='text' className='add_tab_page_form_input' onChange={e => setCategory(e.target.value)} />
+                    <select onChange={e => setCategory(e.target.value)}>
+                        {categories && categories.map((x) => (
+                            <option value={x._id} >{x.name}</option>
+                        ))}
+                    </select>
                     <div className='input_title'>
                         <div className='line'></div>
-                        <label htmlFor="text">Author</label>
+                        <label htmlFor="text">Author ID</label>
                     </div>
                     <input type="text" id='text' name='text' className='add_tab_page_form_input' onChange={e => setAuthor(e.target.value)} />
                     <div className='input_title'>
                         <div className='line'></div>
                         <label htmlFor="text">Description</label>
                     </div>
-                    <ReactQuill modules={modules} formats={formats} onChange={e => setDescription(e.target.value)} />
+                    <ReactQuill modules={modules} formats={formats} onChange={setDescription} />
                     <div className='input_title'>
                         <div className='line'></div>
                         <label htmlFor="text">Photo</label>
                     </div>
                     <input type="file" className='add_tab_page_form_input' onChange={e => setImage(e.target.files[0])} />
-                    <button className='add_tab_page_form_btn'>Edit</button>
+                    <button className='add_tab_page_form_btn'>Add</button>
                 </form>
             </div>
         </>

@@ -1,19 +1,26 @@
 #post_detail {
     .hero_detail {
-        background-image: url("https://demos.pixelgrade.com/pile/wp-content/uploads/sites/6/2014/09/ionabrown_6.jpg");
-        background-repeat: no-repeat;
-        background-size: cover;
-        background-attachment: fixed;
         width: 100%;
         min-height: 80vh;
         display: grid;
         place-items: center;
+        position: relative;
+        overflow: hidden;
+
+        img {
+            height: 80vh;
+            width: 100%;
+            object-fit: cover;
+        }
 
         h1 {
             font-size: 100px;
+            position: absolute;
+            top: 35%;
+            left: 20%;
             text-transform: uppercase;
-            font-weight: 700;
-            color: #fa5263c2;
+            font-weight: 800;
+            color: white;
         }
     }
 
@@ -27,7 +34,7 @@
                 display: flex;
                 align-items: flex-start;
                 gap: 30px;
-                margin-bottom: 20px;
+                margin-bottom: 30px;
                 padding-bottom: 20px;
                 border-bottom: 2px solid #E5E5E5;
 
@@ -36,7 +43,7 @@
                     align-items: center;
                     gap: 15px;
                     width: 16%;
-                    margin-bottom: 20px;
+                    margin-bottom: 30px;
 
                     .line {
                         height: 1px;
@@ -52,7 +59,15 @@
                     }
                 }
 
-                .text {}
+                .text {
+                    letter-spacing: 1px;
+                }
+
+                .detail_name {
+                    letter-spacing: 1px;
+                    text-transform: uppercase;
+                    font-size: 20px;
+                }
 
                 .author_icons {
                     display: flex;
@@ -142,3 +157,124 @@
     //     }
     // }
 }
+
+@media (max-width: 575.98px) {
+    #post_detail {
+        .hero_detail {
+            
+
+            h1 {
+                font-size: 60px;
+                top: 35%;
+                left: 20%;
+            }
+        }
+
+        .post_detail_container {
+            .detail_content {
+                &_item {
+                    display: flex;
+                    align-items: flex-start;
+                    flex-direction: column;
+                    gap: 30px;
+                    margin-bottom: 30px;
+                    padding-bottom: 20px;
+                    border-bottom: 2px solid #E5E5E5;
+
+                    .detail-title {
+                        display: flex;
+                        align-items: center;
+                        gap: 15px;
+                        width: 16%;
+                        margin-bottom: 30px;
+
+                        .line {
+                            height: 1px;
+                            width: 30px;
+                            background-color: #fa5263c2;
+                        }
+
+                        p {
+                            color: #fa5263c2;
+                            text-transform: uppercase;
+                            letter-spacing: 2px;
+                            font-weight: 500;
+                        }
+                    }
+
+                    .text {
+                        letter-spacing: 1px;
+                        padding-left: 20px;
+                    }
+
+                    .detail_name {
+                        letter-spacing: 1px;
+                        text-transform: uppercase;
+                        font-size: 20px;
+                    }
+
+                    .author_icons {
+                        display: flex;
+                        align-items: center;
+                        gap: 5px;
+
+                        .author_icon {
+                            height: 25px;
+                            width: 25px;
+                            border-radius: 50%;
+                            border: 1px solid black;
+                            display: grid;
+                            place-items: center;
+                            cursor: pointer;
+                            transition: 0.5s all ease;
+
+                            &:hover {
+                                background-color: #fa5263c2;
+                                height: 27px;
+                                width: 27px;
+                                border: none;
+                            }
+
+                            &:hover i {
+                                transform: rotate(360deg);
+                                color: white;
+                                font-size: 15px;
+                            }
+
+                            i {
+                                font-size: 12px;
+                                color: black;
+                                transition: 0.5s all ease;
+                            }
+                        }
+                    }
+                }
+
+                .icons {
+                    .icon {
+                        height: 60px;
+                        width: 60px;
+                        margin: auto;
+                        border-radius: 50%;
+                        border: 1px solid black;
+                        display: grid;
+                        place-items: center;
+
+                        i {
+                            font-size: 25px;
+                        }
+                    }
+                }
+            }
+        }
+
+    }
+}
+
+@media (min-width: 576px) and (max-width: 767.98px) {}
+
+@media (min-width: 768px) and (max-width: 991.98px) {}
+
+@media (min-width: 992px) and (max-width: 1199.98px) {}
+
+@media (min-width: 1200px) {}

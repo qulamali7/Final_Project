@@ -3,7 +3,7 @@ import "./index.scss";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../context/UserContext";
 function Register() {
-    const {token} = useContext(UserContext)
+    const { token } = useContext(UserContext)
     const [error, setError] = useState("")
     const navigate = useNavigate()
     const [state, setState] = React.useState({
@@ -18,11 +18,6 @@ function Register() {
     };
 
     const handleOnSubmit = async evt => {
-        // evt.preventDefault();
-        // alert(
-        //     `You are sign up with name: ${name} email: ${email} and password: ${password}`
-        // );
-        // setError(" ")
         try {
             await fetch("http://localhost:3200/register", {
                 method: "POST",
@@ -33,15 +28,12 @@ function Register() {
                     name: state.name,
                     email: state.email,
                     password: state.password,
-                    password2: state.password2 
+                    password2: state.password2
                 }),
             })
         } catch (error) {
             setError(error)
         }
-        // for (const key in state) {
-        //     setState({...state,[key]: ""});
-        // }
     };
 
     return (

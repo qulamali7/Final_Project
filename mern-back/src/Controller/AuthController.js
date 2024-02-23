@@ -18,9 +18,9 @@ export const loginUser = async (req, res, next) => {
         if (!checkPassword) {
             return res.status(401).send({ error: "Invalid credentials" })
         }
-        const { _id: id, name, role } = user
-        const token = jwt.sign({ role: user.role, email: user.newEmail, _id: user._id }, process.env.JWT_KEY)
-        res.status(200).json({ token, id, name, role });
+        const { _id: id, name } = user
+        const token = jwt.sign({ role: user.role, email: user.newEmail, _id: user._id, name }, process.env.JWT_KEY)
+        res.status(200).json(token);
     } catch (error) {
         return res.status(500).json({ error: "User login failed" })
     }
@@ -43,7 +43,6 @@ export const registerUser = async (req, res, next) => {
         if (password != password2) {
             return res.status(401).send({ error: "Password do not match" })
         }
-
         const salt = await bcrypt.genSalt(10)
         const hash = await bcrypt.hash(password, salt)
         const newUser = new UsersModel({ name, email: newEmail, password: hash })

@@ -3,8 +3,8 @@ import "./index.scss";
 import { Link, NavLink } from 'react-router-dom';
 import { UserContext } from '../../context/UserContext';
 const Header = () => {
-    const { decode } = useContext(UserContext);
-    const headerRef = useRef(null)
+    const { decode, token } = useContext(UserContext);
+    const headerRef = useRef("")
     const stickyHeader = () => {
         window.addEventListener('scroll', () => {
             if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
@@ -21,6 +21,7 @@ const Header = () => {
     })
     return (
         <>
+            {console.log(decode)}
             <header ref={headerRef}>
                 <div className='header_container'>
                     <div className='header_content'>
@@ -37,18 +38,16 @@ const Header = () => {
                                     <NavLink className="montserrat" to={"/blogs"}>Blog</NavLink>
                                     <div className='line'></div>
                                 </li>
-                                <li>
-                                    <NavLink className="montserrat" to={"/"}>About</NavLink>
-                                    <div className='line'></div>
-                                </li>
-                                <li>
+                              
+                                {token ? <li>
+                                    <NavLink className="montserrat" to={"/userProfile"}><i className="fa-regular fa-user"></i></NavLink>
+                                </li> : <li>
                                     <NavLink className="montserrat" to={"/login"}>Login</NavLink>
                                     <div className='line'></div>
-                                </li>
-                                {console.log(decode)}
-                                {decode ? <li>
-                                    <NavLink className="montserrat" to={"/userProfile"}><i className="fa-regular fa-user"></i></NavLink>
-                                </li> : null}
+                                </li>}
+                                {decode?.role === "admin" && <li>
+                                    <NavLink className="montserrat" to={"/adminPanel"}><i className="fa-solid fa-gear"></i></NavLink>
+                                </li>}
                             </ul>
                         </nav>
                         <button className='nav_menu'>

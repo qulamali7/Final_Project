@@ -1,7 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import "./index.scss";
 import { Link } from 'react-router-dom';
+import AOS from "aos";
+import "aos/dist/aos.css";
 const PostsCards = () => {
+    useEffect(() => {
+        AOS.init({ duration: 2500 });
+    }, []);
     const [posts, setPosts] = useState([])
     async function getFetch() {
         try {
@@ -19,9 +24,9 @@ const PostsCards = () => {
     return (
         <>
             <div className='posts_cards'>
-                {posts && posts.map((x) => (
-                    <Link to={"/detail/" + x._id}>
-                        <div className='posts_card'>
+                {posts && posts.slice(0, 3).map((x) => (
+                    <Link to={"/detail/" + x._id} key={x._id}>
+                        <div data-aos="flip-right" className='posts_card' >
                             <img src={x.image} alt="" />
                             <div className='card_text'>
                                 <span>{x.category.name}</span>

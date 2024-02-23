@@ -6,7 +6,7 @@ header {
     position: fixed;
     top: 0;
     left: 0;
-    z-index: 2;
+    z-index: 7;
     transition: 0.5s all ease;
 
     .header_container {
@@ -19,6 +19,7 @@ header {
             justify-content: space-between;
 
             .header_logo {
+
 
                 a {
                     color: #fff;
@@ -79,7 +80,7 @@ header {
     position: sticky;
     top: 0;
     left: 0;
-    z-index: 5;
+    z-index: 7;
     background-color: #fff;
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
     transition: 0.5s all ease;
@@ -128,3 +129,56 @@ header {
         }
     }
 }
+
+
+@media (max-width: 575.98px) {
+    header {
+        .header_container {
+            .header_content {
+
+                .header_logo {
+                    margin: auto;
+                }
+
+                nav {
+                    display: none;
+                }
+            }
+        }
+    }
+}
+
+
+@media (min-width: 576px) and (max-width: 767.98px) {
+    header {
+        .header_container {
+            .header_content {
+                padding: 0px 30px;
+
+            }
+        }
+    }
+}
+
+@media (min-width: 768px) and (max-width: 991.98px) {
+    header {
+        .header_container {
+            .header_content {
+                padding: 0px 30px;
+
+            }
+        }
+    }
+}
+
+@media (min-width: 992px) and (max-width: 1199.98px) {
+    header {
+        .header_container {
+            .header_content {
+                padding: 0px 30px;
+
+            }
+        }
+    }
+}
+
